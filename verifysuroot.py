@@ -1,6 +1,23 @@
+from os.path import exists
+import argparse
 import subprocess
+
 FAIL = b'Password: \r\nsu: Authentication failure'
 FILE = './list.txt'
+
+parser = argparse.ArgumentParser(description='Check su passwords', usage='%(prog)s --wordlist=<wordlist>')
+parser.add_argument('--wordlist', help='password list to try', required=True)
+args = parser.parse_args()
+inputFile = args.wordlist
+
+
+def check_exists(passFile):
+    if exists(passFile):
+        return passFile 
+    else:
+        print('File {} does not exist'.format(passFile))
+        parser.print_help()
+        exit()
 
 def validate_pass(passwd):
     ret = 0
@@ -20,10 +37,13 @@ def verify(passwd):
     print (passwd.rstrip() + ":Valid password")
 
 def main():
-  with open(FILE, 'r') as f:
+  passFile = check_exists(inputFile)
+
+  with open(passFile, 'r') as f:
     data = f.readlines()
   for password in data:
     verify(password)
 
 if __name__ == '__main__':
+    #pass
     main()
