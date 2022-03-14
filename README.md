@@ -7,8 +7,7 @@
 >  --wordlist WORDLIST  password list to try
 
 Example:
-./verifysuroot.py  --wordlist=/tmp/password
+./verifysuroot.py  --wordlist=./top_100_animated_movies.txt
 letmein:Invalid password
 letyouin:Invalid password
 letanyonein:Valid password
-
